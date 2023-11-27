@@ -18,7 +18,7 @@ from trl.trainer import ConstantLengthDataset
 
 @dataclass
 class ScriptArguments:
-    model_name: Optional[str] = field(default="microsoft/Orca-2-13b", metadata={"help": "the model name"})
+    model_name: Optional[str] = field(default="Intel/neural-chat-7b-v3-1", metadata={"help": "the model name"})
 
     dataset_name: Optional[str] = field(default="lvwerra/stack-exchange-paired", metadata={"help": "the dataset name"})
     subset: Optional[str] = field(default="data/finetune", metadata={"help": "the subset to use"})
@@ -35,9 +35,9 @@ class ScriptArguments:
             max_steps=500,
             logging_steps=10,
             save_steps=10,
-            per_device_train_batch_size=4,
+            per_device_train_batch_size=1,
             per_device_eval_batch_size=1,
-            gradient_accumulation_steps=2,
+            gradient_accumulation_steps=10,
             gradient_checkpointing=False,
             group_by_length=False,
             learning_rate=1e-4,
@@ -48,7 +48,7 @@ class ScriptArguments:
             optim="paged_adamw_32bit",
             bf16=True,
             remove_unused_columns=False,
-            run_name="sft_llama2",
+            run_name="ner",
             report_to="wandb",
         )
     )
@@ -190,7 +190,7 @@ if __name__ == "__main__":
         eval_dataset=eval_dataset,
         peft_config=peft_config,
         packing=script_args.packing,
-        max_seq_length=None,
+        max_seq_length=2048,
         tokenizer=tokenizer,
         neftune_noise_alpha=5,
         args=training_args,

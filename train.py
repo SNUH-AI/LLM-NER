@@ -19,7 +19,7 @@ from trl.trainer import ConstantLengthDataset
 @dataclass
 class ScriptArguments:
     model_name: Optional[str] = field(default="Intel/neural-chat-7b-v3-1", metadata={"help": "the model name"})
-
+    cache_dir=None # "PATH/TO/MY/CACHE/DIR"
     dataset_name: Optional[str] = field(default="lvwerra/stack-exchange-paired", metadata={"help": "the dataset name"})
     subset: Optional[str] = field(default="data/finetune", metadata={"help": "the subset to use"})
     split: Optional[str] = field(default="train", metadata={"help": "the split to use"})

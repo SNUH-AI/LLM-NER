@@ -1,8 +1,6 @@
 from transformers import pipeline
 import gradio as gr
 
-ner_pipeline = pipeline("ner")
-
 def ner(text):
     """
     Named Entity Recognition

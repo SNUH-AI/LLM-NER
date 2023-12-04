@@ -1,3 +1,5 @@
 results/
 wandb/
 flagged/
+experiment.ipynb
+trained_model

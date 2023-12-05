@@ -3,3 +3,6 @@ wandb/
 flagged/
 experiment.ipynb
 trained_model
+data/
+.cache/
+__pycache__/

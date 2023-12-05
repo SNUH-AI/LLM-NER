@@ -12,7 +12,6 @@ class NERSystem:
         print(model_path)
         if not os.path.exists(model_path):
             raise Exception("Model path does not exist")
-        breakpoint()
         self.tokenizer = LlamaTokenizer.from_pretrained(model_path)
         self.model = MistralForCausalLM.from_pretrained(
                     model_path,
@@ -22,8 +21,6 @@ class NERSystem:
                     load_in_4bit=True,
                     use_flash_attention_2=True
                 )
-
-
 
     def ner_inference(self, texts):
 

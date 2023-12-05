@@ -57,29 +57,43 @@ Specific Rules: Replace all the following information with the term “[redacted
 
 TAGS = ["NAMES", "DATE", "AGE", "LOCATION", "CONTACT", "IDTAG"]
 
-
-class Redactor:
-    def __init__(self, xml_file, tag_types=['PATIENT', 'DOCTOR', 'USERNAME']) -> None:
+class BaseXMLReader:
+    def __init__(self, xml_file) -> None:
         self.xml_file = xml_file
-        self.tags = self.extract_tags(xml_file)
         self.text = self.extract_text(xml_file)
-        self.tag_types = tag_types
-        self.tag_list = [tag for tag in self.tags if tag['TYPE'] in tag_types]
 
     def extract_text(self, xml_file):
         tree = ET.parse(xml_file)
         text = tree.find("TEXT").text
         return text
 
+class Redactor:
+    def __init__(self, xml_file, tag_types=['PATIENT', 'DOCTOR', 'USERNAME']) -> None:
+        self.xml_file = xml_file
+        self.tree = ET.parse(xml_file)
+        self.tags = self.extract_tags(xml_file)
+        self.text = self.extract_text(xml_file)
+        self.tag_types = tag_types
+        self.tag_list = [tag for tag in self.tags if tag['TYPE'] in tag_types]
+
+    def extract_text(self, xml_file):
+        text = self.tree.find("TEXT").text
+        return text
+
     def extract_tags(self, xml_file):
-        tree = ET.parse(xml_file)
-        tags = tree.find("TAGS")
+        tags = self.tree.find("TAGS")
         tag_list = []
         for tag in tags:
             tag_dict = {'tag':tag.tag}
             tag_dict.update(tag.attrib) 
             tag_list.append(tag_dict)
         return tag_list
+    
+    def add_tags(self, tag_list):
+        tags = self.tree.find("TAGS")
+        for tag in tag_list:
+            tags.append(tag)
+        return tags
 
     @staticmethod           
     def redact_tag(text, tag):

@@ -8,3 +8,4 @@ PROMPT_DICTIONARY = {
     "CONTACTS": "Replace with [redacted] any strings that might be the phone number, fax number, or website.",
     "ID": "Replace with [redacted] any strings that might be the ID, social security number, or passport number.",
 }
+
